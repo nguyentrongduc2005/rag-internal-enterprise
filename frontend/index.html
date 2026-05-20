@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Workspace</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar">
+        <section class="brand">
+          <div>
+            <h1>RAG Workspace</h1>
+            <p id="userLabel">Chưa đăng nhập</p>
+          </div>
+          <button id="logoutBtn" class="icon-button" title="Đăng xuất" hidden>⎋</button>
+        </section>
+
+        <section id="authPanel" class="panel">
+          <div class="tabs">
+            <button class="tab active" data-auth-tab="login">Đăng nhập</button>
+            <button class="tab" data-auth-tab="register">Đăng ký</button>
+          </div>
+          <form id="authForm" class="form">
+            <input id="fullNameInput" type="text" placeholder="Họ tên" hidden />
+            <input id="emailInput" type="email" placeholder="Email" required />
+            <input id="passwordInput" type="password" placeholder="Mật khẩu" minlength="8" required />
+            <button id="authSubmit" type="submit">Đăng nhập</button>
+          </form>
+        </section>
+
+        <section id="documentPanel" class="panel" hidden>
+          <div class="section-title">
+            <h2>Tài liệu</h2>
+            <button id="refreshDocsBtn" class="icon-button" title="Tải lại">↻</button>
+          </div>
+          <form id="uploadForm" class="upload">
+            <input id="fileInput" type="file" accept=".pdf,.docx,.txt,.md,.csv" />
+            <button type="submit">Upload</button>
+          </form>
+          <div id="documentList" class="list"></div>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <h2>Hội thoại</h2>
+            <p id="conversationLabel">Tạo câu hỏi mới để bắt đầu</p>
+          </div>
+          <button id="newChatBtn">Chat mới</button>
+        </header>
+
+        <div class="content">
+          <aside class="conversation-panel">
+            <div class="section-title">
+              <h2>Lịch sử</h2>
+              <button id="refreshConversationsBtn" class="icon-button" title="Tải lại">↻</button>
+            </div>
+            <div id="conversationList" class="list"></div>
+          </aside>
+
+          <section class="chat-panel">
+            <div id="messages" class="messages">
+              <div class="empty-state">Đăng nhập, upload tài liệu, rồi đặt câu hỏi.</div>
+            </div>
+            <form id="chatForm" class="composer">
+              <textarea id="questionInput" rows="2" placeholder="Nhập câu hỏi..." required></textarea>
+              <button id="sendBtn" type="submit">Gửi</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

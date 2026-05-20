@@ -24,23 +24,14 @@ class MinioStorage:
     def upload_file(self, file: UploadFile) -> tuple[str, int]:
         object_key = f"documents/{uuid.uuid4()}-{file.filename}"
 
-        file.file.seek(0)
-
-        size = 0
-        chunks = []
-
-        while chunk := file.file.read(1024 * 1024):
-            size += len(chunk)
-            chunks.append(chunk)
-
-        from io import BytesIO
-
-        data = BytesIO(b"".join(chunks))
+        file.file.seek(0, 2)  # Seek to the end to get file size
+        size = file.file.tell()
+        file.file.seek(0)  # Seek back to start for the actual upload
 
         self.client.put_object(
             bucket_name=self.bucket,
             object_name=object_key,
-            data=data,
+            data=file.file,
             length=size,
             content_type=file.content_type,
         )
@@ -69,6 +60,13 @@ class MinioStorage:
         return self.client.presigned_get_object(
             bucket_name=self.bucket,
             object_name=object_key,
+        )
+    
+    def fget_object(self, bucket_name: str, object_name: str, file_path: str):
+        self.client.fget_object(
+            bucket_name=bucket_name,
+            object_name=object_name,
+            file_path=file_path,
         )
 
 

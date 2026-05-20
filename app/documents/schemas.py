@@ -6,6 +6,7 @@ class DocumentResponse(BaseModel):
     id: str
     title: str
     file_name: str
+    owner_id: str | None = None
     bucket_name: str
     object_key: str
     content_type: str | None
@@ -16,6 +17,6 @@ class DocumentResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
+# model_config = ConfigDict(from_attributes=True)
 class DocumentDownloadResponse(BaseModel):
     url: str
